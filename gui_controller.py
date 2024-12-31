@@ -67,10 +67,14 @@ def gui_process(queue):
 
     def update_cube_selector():
         """Aktualisiere die Cube-Auswahlliste."""
-        cube_selector["menu"].delete(0, "end")
+        cube_selector["menu"].delete(0, "end")  # Lösche alle bisherigen Einträge
         for idx, cube in enumerate(cubes):
-            cube_selector["menu"].add_command(label=f"Cube {idx}", command=lambda idx=idx: select_cube(idx))
-
+            # Füge jeden Cube mit seinem Index hinzu
+            cube_selector["menu"].add_command(
+                label=f"Cube {idx}",  # Anzeigename
+                command=lambda idx=idx: select_cube(idx)  # Tatsächlicher Wert
+            )
+            
     def choose_color():
         """Öffne einen Farbauswahldialog."""
         index = selected_cube_index.get()
@@ -104,7 +108,13 @@ def gui_process(queue):
 
     # Dropdown-Menü zur Cube-Auswahl
     tk.Label(root, text="Wähle einen Cube:").pack()
-    cube_selector = tk.OptionMenu(root, selected_cube_index, *[f"Cube {i}" for i in range(len(cubes))], command=select_cube)
+    # Erstelle das OptionMenu mit den Indizes (Integer) als Werte
+    cube_selector = tk.OptionMenu(
+        root,
+        selected_cube_index,
+        *range(len(cubes)),  # Werte sind die Indizes der Cubes
+        command=select_cube
+    )
     cube_selector.pack()
 
     # Positionseinstellungen

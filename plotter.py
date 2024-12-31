@@ -3,9 +3,18 @@ from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 
 def plot_process(queue):
     print("Plot-Prozess gestartet...")
+    cubes = []  # Liste der Cubes
 
-    # Funktion zum Zeichnen eines Quaders
-    def draw_cube(ax, position, size, color='blue', alpha=0.7):
+
+    def draw_cube(ax, cube):
+        """Zeichne einen Cube, wenn er sichtbar ist."""
+        if not cube.get("visible", True):  # Überspringe unsichtbare Cubes
+            return
+
+        position = cube["position"]
+        size = cube["size"]
+        color = cube["color"]
+
         x, y, z = position
         dx, dy, dz = size
 
@@ -31,7 +40,7 @@ def plot_process(queue):
             [vertices[4], vertices[5], vertices[6], vertices[7]],  # Seite rechts
         ]
 
-        ax.add_collection3d(Poly3DCollection(faces, facecolors=color, linewidths=1, edgecolors='black', alpha=alpha))
+        ax.add_collection3d(Poly3DCollection(faces, facecolors=color, linewidths=1, edgecolors='black', alpha=0.7))
 
     # Matplotlib-Plot initialisieren
     fig = plt.figure()
@@ -44,13 +53,18 @@ def plot_process(queue):
     # Funktion zum Replotten
     def replot():
         ax.clear()  # Lösche den alten Plot
-        draw_cube(ax, tuple(cube_position), tuple(cube_size), color='red')
-        ax.set_xlim([0, 10])
-        ax.set_ylim([0, 10])
-        ax.set_zlim([0, 10])
-        ax.set_xlabel('X-Achse')
-        ax.set_ylabel('Y-Achse')
-        ax.set_zlabel('Z-Achse')
+
+        # Zeichne alle sichtbaren Cubes
+        for cube in cubes:
+            draw_cube(ax, cube)
+
+        # Achsenbegrenzungen
+        ax.set_xlim([0, 30])
+        ax.set_ylim([0, 30])
+        ax.set_zlim([0, 30])
+        ax.set_xlabel('x')
+        ax.set_ylabel('y')
+        ax.set_zlabel('z')
         plt.draw()
 
     # Interaktiver Plot
@@ -70,8 +84,22 @@ def plot_process(queue):
                 break        # Beende die Schleife
             else:
                 print(f"Empfangene Daten: {command}")
-                cube_position = command["position"]
-                cube_size = command["size"]
+                index = command["index"]
+
+                # Wenn der Index in der Cube-Liste existiert, aktualisiere ihn
+                if index < len(cubes):
+                    cubes[index].update(command)
+                    print(f"Cube {index} aktualisiert: {cubes[index]}")
+                # Wenn der Index größer ist, füge einen neuen Cube hinzu
+                elif index == len(cubes):
+                    cubes.append(command)
+                    print(f"Neuer Cube hinzugefügt: {command}")
+                # Löschen eines Cubes, wenn `visible` auf False gesetzt wird
+                elif command.get("action") == "delete":
+                    if index < len(cubes):
+                        del cubes[index]
+                        print(f"Cube {index} gelöscht.")
+                
                 replot()
         else:
             # Debug: Keine neuen Daten
