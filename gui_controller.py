@@ -47,7 +47,9 @@ def gui_process(queue):
     def add_cube():
         """Füge einen neuen Cube hinzu."""
         cubes.append({"position": [0, 0, 0], "size": [1, 1, 1], "color": "red"})
-        cube_selector["menu"].add_command(label=f"Cube {len(cubes) - 1}", command=lambda idx=len(cubes) - 1: select_cube(idx))
+        update_cube_selector()
+        selected_cube_index.set(len(cubes) - 1)  # Wähle den neuen Cube aus
+        update_gui_fields()
         print(f"Neuer Cube hinzugefügt. Gesamtzahl: {len(cubes)}")
 
     def delete_cube():
@@ -106,56 +108,99 @@ def gui_process(queue):
     menu_bar.add_cascade(label="Datei", menu=file_menu)
     root.config(menu=menu_bar)  # Menüleiste hinzufügen
 
-    # Dropdown-Menü zur Cube-Auswahl
-    tk.Label(root, text="Wähle einen Cube:").pack()
-    # Erstelle das OptionMenu mit den Indizes (Integer) als Werte
+    # Frames erstellen
+    top_frame = tk.Frame(root) #Für Cube auswahl
+    top_frame.pack(fill="x", pady=5)
+
+    middle_frame = tk.Frame(root) #Für die Slider
+    middle_frame.pack(fill="both", expand=True, pady=5)
+
+    bottom_frame = tk.Frame(root) #Für Farbauswahl und Buttons
+    bottom_frame.pack(fill="x", pady=5)
+
+    # Cube-Auswahl im oberen Frame
+    tk.Label(top_frame, text="Wähle einen Cube:").pack(side="left", padx=5)
     cube_selector = tk.OptionMenu(
-        root,
+        top_frame,
         selected_cube_index,
-        *range(len(cubes)),  # Werte sind die Indizes der Cubes
+        *range(len(cubes)),
         command=select_cube
     )
-    cube_selector.pack()
+    cube_selector.pack(side="left", padx=5)
     update_cube_selector()
 
-    # Positionseinstellungen
-    tk.Label(root, text="Position X").pack()
-    pos_x_slider = ttk.Scale(root, from_=0, to=30, orient="horizontal", command=lambda _: send_update())
-    pos_x_slider.pack()
-    pos_x_value_label = tk.Label(root, text="0")  # Anzeige des aktuellen Wertes
-    pos_x_value_label.pack()
+    # Grid-Layout für Schieberegler im mittleren Frame
+    minpos=0
+    maxpos=30
+    minsize=9
+    maxsize=11
+    # Grid für Position X
+    tk.Label(middle_frame, text="Position X").grid(row=0, column=0, sticky="w", padx=5, pady=2)
+    pos_x_slider = ttk.Scale(middle_frame, from_=minpos, to=maxpos, orient="horizontal", command=lambda val: (pos_x_value_label.config(text=f"{int(float(val))}"), send_update()))
+    pos_x_slider.grid(row=0, column=1, sticky="we", padx=5, pady=2)  # Schieberegler füllt horizontal
+    pos_x_value_label = tk.Label(middle_frame, text="0", width=5)
+    pos_x_value_label.grid(row=0, column=2, sticky="e", padx=5, pady=2)
 
-    tk.Label(root, text="Position Y").pack()
-    pos_y_slider = ttk.Scale(root, from_=0, to=30, orient="horizontal", command=lambda _: send_update())
-    pos_y_slider.pack()
+    # Grid für Position Y
+    tk.Label(middle_frame, text="Position Y").grid(row=1, column=0, sticky="w", padx=5, pady=2)
+    pos_y_slider = ttk.Scale(middle_frame, from_=minpos, to=maxpos, orient="horizontal", command=lambda val: (pos_y_value_label.config(text=f"{int(float(val))}"), send_update()))
+    pos_y_slider.grid(row=1, column=1, sticky="we", padx=5, pady=2)
+    pos_y_value_label = tk.Label(middle_frame, text="0", width=5)
+    pos_y_value_label.grid(row=1, column=2, sticky="e", padx=5, pady=2)
 
-    tk.Label(root, text="Position Z").pack()
-    pos_z_slider = ttk.Scale(root, from_=0, to=30, orient="horizontal", command=lambda _: send_update())
-    pos_z_slider.pack()
+    # Grid für Position Z
+    tk.Label(middle_frame, text="Position Z").grid(row=2, column=0, sticky="w", padx=5, pady=2)
+    pos_z_slider = ttk.Scale(middle_frame, from_=minpos, to=maxpos, orient="horizontal", command=lambda val: (pos_z_value_label.config(text=f"{int(float(val))}"), send_update()))
+    pos_z_slider.grid(row=2, column=1, sticky="we", padx=5, pady=2)
+    pos_z_value_label = tk.Label(middle_frame, text="0", width=5)
+    pos_z_value_label.grid(row=2, column=2, sticky="e", padx=5, pady=2)
 
-    # Größeneinstellungen
-    tk.Label(root, text="Größe X").pack()
-    size_x_slider = ttk.Scale(root, from_=9, to=11, orient="horizontal", command=lambda _: send_update())
-    size_x_slider.pack()
+    # Grid für Größe X
+    tk.Label(middle_frame, text="Größe X").grid(row=3, column=0, sticky="w", padx=5, pady=2)
+    size_x_slider = ttk.Scale(middle_frame, from_=minsize, to=maxsize, orient="horizontal", command=lambda val: (size_x_value_label.config(text=f"{int(float(val))}"), send_update()))
+    size_x_slider.grid(row=3, column=1, sticky="we", padx=5, pady=2)
+    size_x_value_label = tk.Label(middle_frame, text="1", width=5)
+    size_x_value_label.grid(row=3, column=2, sticky="e", padx=5, pady=2)
 
-    tk.Label(root, text="Größe Y").pack()
-    size_y_slider = ttk.Scale(root, from_=9, to=11, orient="horizontal", command=lambda _: send_update())
-    size_y_slider.pack()
+    # Grid für Größe Y
+    tk.Label(middle_frame, text="Größe Y").grid(row=4, column=0, sticky="w", padx=5, pady=2)
+    size_y_slider = ttk.Scale(middle_frame, from_=minsize, to=maxsize, orient="horizontal", command=lambda val: (size_y_value_label.config(text=f"{int(float(val))}"), send_update()))
+    size_y_slider.grid(row=4, column=1, sticky="we", padx=5, pady=2)
+    size_y_value_label = tk.Label(middle_frame, text="1", width=5)
+    size_y_value_label.grid(row=4, column=2, sticky="e", padx=5, pady=2)
 
-    tk.Label(root, text="Größe Z").pack()
-    size_z_slider = ttk.Scale(root, from_=9, to=11, orient="horizontal", command=lambda _: send_update())
-    size_z_slider.pack()
+    # Grid für Größe Z
+    tk.Label(middle_frame, text="Größe Z").grid(row=5, column=0, sticky="w", padx=5, pady=2)
+    size_z_slider = ttk.Scale(middle_frame, from_=minsize, to=maxsize, orient="horizontal", command=lambda val: (size_z_value_label.config(text=f"{int(float(val))}"), send_update()))
+    size_z_slider.grid(row=5, column=1, sticky="we", padx=5, pady=2)
+    size_z_value_label = tk.Label(middle_frame, text="1", width=5)
+    size_z_value_label.grid(row=5, column=2, sticky="e", padx=5, pady=2)
 
-    # Farbauswahl
-    tk.Label(root, text="Farbe:").pack()
-    color_label = tk.Label(root, text="red", bg="red", width=10)
-    color_label.pack()
-    color_button = ttk.Button(root, text="Farbe wählen", command=choose_color)
-    color_button.pack()
 
-    # Buttons zum Hinzufügen/Löschen von Cubes
-    ttk.Button(root, text="Neuen Cube hinzufügen", command=add_cube).pack()
-    ttk.Button(root, text="Ausgewählten Cube löschen", command=delete_cube).pack()
+    # Farbauswahl und Buttons im Grid-Layout (bottom_frame)
+    # Farbe und Farbfeld in einer Zelle
+    color_frame = tk.Frame(bottom_frame)
+    color_frame.grid(row=0, column=0, columnspan=1, sticky="w", padx=5, pady=2)
+
+    tk.Label(color_frame, text="Farbe:").pack(side="left", padx=5)
+    color_label = tk.Label(color_frame, text="red", bg="red", width=10)
+    color_label.pack(side="left", padx=5)
+
+    color_button = ttk.Button(bottom_frame, text="Farbe wählen", command=choose_color)
+    color_button.grid(row=0, column=1, padx=5, pady=2, sticky="we")
+
+    # Buttons
+    add_cube_button = ttk.Button(bottom_frame, text="Neuen Cube hinzufügen", command=add_cube)
+    add_cube_button.grid(row=1, column=0, padx=5, pady=2, sticky="we")
+
+    delete_cube_button = ttk.Button(bottom_frame, text="Ausgewählten Cube löschen", command=delete_cube)
+    delete_cube_button.grid(row=1, column=1, padx=5, pady=2, sticky="we")
+    
+    bottom_frame.grid_columnconfigure(0, weight=1)
+    bottom_frame.grid_columnconfigure(1, weight=1)
+    bottom_frame.grid_columnconfigure(2, weight=1)
+
+
 
     # Felder initialisieren
     update_gui_fields()

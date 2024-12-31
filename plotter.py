@@ -65,6 +65,7 @@ def plot_process(queue):
         ax.set_xlabel('x')
         ax.set_ylabel('y')
         ax.set_zlabel('z')
+        ax.view_init(elev=23,azim=38)
         plt.draw()
 
     # Interaktiver Plot
