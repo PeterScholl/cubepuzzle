@@ -116,31 +116,34 @@ def gui_process(queue):
         command=select_cube
     )
     cube_selector.pack()
+    update_cube_selector()
 
     # Positionseinstellungen
     tk.Label(root, text="Position X").pack()
-    pos_x_slider = ttk.Scale(root, from_=0, to=10, orient="horizontal", command=lambda _: send_update())
+    pos_x_slider = ttk.Scale(root, from_=0, to=30, orient="horizontal", command=lambda _: send_update())
     pos_x_slider.pack()
+    pos_x_value_label = tk.Label(root, text="0")  # Anzeige des aktuellen Wertes
+    pos_x_value_label.pack()
 
     tk.Label(root, text="Position Y").pack()
-    pos_y_slider = ttk.Scale(root, from_=0, to=10, orient="horizontal", command=lambda _: send_update())
+    pos_y_slider = ttk.Scale(root, from_=0, to=30, orient="horizontal", command=lambda _: send_update())
     pos_y_slider.pack()
 
     tk.Label(root, text="Position Z").pack()
-    pos_z_slider = ttk.Scale(root, from_=0, to=10, orient="horizontal", command=lambda _: send_update())
+    pos_z_slider = ttk.Scale(root, from_=0, to=30, orient="horizontal", command=lambda _: send_update())
     pos_z_slider.pack()
 
     # Größeneinstellungen
     tk.Label(root, text="Größe X").pack()
-    size_x_slider = ttk.Scale(root, from_=1, to=5, orient="horizontal", command=lambda _: send_update())
+    size_x_slider = ttk.Scale(root, from_=9, to=11, orient="horizontal", command=lambda _: send_update())
     size_x_slider.pack()
 
     tk.Label(root, text="Größe Y").pack()
-    size_y_slider = ttk.Scale(root, from_=1, to=5, orient="horizontal", command=lambda _: send_update())
+    size_y_slider = ttk.Scale(root, from_=9, to=11, orient="horizontal", command=lambda _: send_update())
     size_y_slider.pack()
 
     tk.Label(root, text="Größe Z").pack()
-    size_z_slider = ttk.Scale(root, from_=1, to=5, orient="horizontal", command=lambda _: send_update())
+    size_z_slider = ttk.Scale(root, from_=9, to=11, orient="horizontal", command=lambda _: send_update())
     size_z_slider.pack()
 
     # Farbauswahl
