@@ -157,23 +157,29 @@ def gui_process(queue):
 
     # Grid für Größe X
     tk.Label(middle_frame, text="Größe X").grid(row=3, column=0, sticky="w", padx=5, pady=2)
-    size_x_slider = ttk.Scale(middle_frame, from_=minsize, to=maxsize, orient="horizontal", command=lambda val: (size_x_value_label.config(text=f"{int(float(val))}"), send_update()))
+    size_x_slider = tk.Scale(middle_frame, from_=minsize, to=maxsize, orient="horizontal",
+                             resolution=1,
+                             command=lambda val: (size_x_value_label.config(text=f"{int(float(val))}"), send_update()))
     size_x_slider.grid(row=3, column=1, sticky="we", padx=5, pady=2)
-    size_x_value_label = tk.Label(middle_frame, text="1", width=5)
+    size_x_value_label = tk.Label(middle_frame, text="9", width=5)
     size_x_value_label.grid(row=3, column=2, sticky="e", padx=5, pady=2)
 
     # Grid für Größe Y
     tk.Label(middle_frame, text="Größe Y").grid(row=4, column=0, sticky="w", padx=5, pady=2)
-    size_y_slider = ttk.Scale(middle_frame, from_=minsize, to=maxsize, orient="horizontal", command=lambda val: (size_y_value_label.config(text=f"{int(float(val))}"), send_update()))
+    size_y_slider = tk.Scale(middle_frame, from_=minsize, to=maxsize, orient="horizontal",
+                             resolution = 1,
+                             command=lambda val: (size_y_value_label.config(text=f"{int(float(val))}"), send_update()))
     size_y_slider.grid(row=4, column=1, sticky="we", padx=5, pady=2)
-    size_y_value_label = tk.Label(middle_frame, text="1", width=5)
+    size_y_value_label = tk.Label(middle_frame, text="9", width=5)
     size_y_value_label.grid(row=4, column=2, sticky="e", padx=5, pady=2)
 
     # Grid für Größe Z
     tk.Label(middle_frame, text="Größe Z").grid(row=5, column=0, sticky="w", padx=5, pady=2)
-    size_z_slider = ttk.Scale(middle_frame, from_=minsize, to=maxsize, orient="horizontal", command=lambda val: (size_z_value_label.config(text=f"{int(float(val))}"), send_update()))
+    size_z_slider = tk.Scale(middle_frame, from_=minsize, to=maxsize, orient="horizontal",
+                             resolution = 1,
+                              command=lambda val: (size_z_value_label.config(text=f"{int(float(val))}"), send_update()))
     size_z_slider.grid(row=5, column=1, sticky="we", padx=5, pady=2)
-    size_z_value_label = tk.Label(middle_frame, text="1", width=5)
+    size_z_value_label = tk.Label(middle_frame, text="9", width=5)
     size_z_value_label.grid(row=5, column=2, sticky="e", padx=5, pady=2)
 
 
