@@ -2,9 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter.colorchooser import askcolor  # Für Farbauswahl
 
-def gui_process(queue):
-    # Initiale Werte für Position und Größe
-    cubes = [{"position": [0, 0, 0], "size": [1, 1, 1], "color": "red"}]
+def gui_process(queue,cubes):
 
     def update_gui_fields():
         """Aktualisiere die GUI-Felder basierend auf dem ausgewählten Cube."""
@@ -25,28 +23,40 @@ def gui_process(queue):
         root.quit()  # Schließt das GUI-Fenster
         root.destroy()  # Beendet den Tkinter-Thread
 
-
-
     def send_update():
-        """Sende die aktuellen Werte des ausgewählten Cubes an die Queue."""
+        """ Liste der Cubes aktualisieren und replot starten """
+        print("send_update - cubes:",cubes)
         index = selected_cube_index.get()
-        cubes[index]["position"] = [
-            int(pos_x_slider.get()),
-            int(pos_y_slider.get()),
-            int(pos_z_slider.get()),
-        ]
-        cubes[index]["size"] = [
-            int(size_x_slider.get()),
-            int(size_y_slider.get()),
-            int(size_z_slider.get()),
-        ]
-        data = {"index": index, **cubes[index]}
-        print(f"Sende folgende Daten: {data}")  # Debug-Ausgabe
-        queue.put(data)
+        
+        # Cube komplett ersetzen (da es sich um eine geteilte Liste handelt - notwendig)
+        cubes[index] = {
+            "position": [
+                int(pos_x_slider.get()),
+                int(pos_y_slider.get()),
+                int(pos_z_slider.get()),
+            ],
+            "size": [
+                int(size_x_slider.get()),
+                int(size_y_slider.get()),
+                int(size_z_slider.get()),
+            ],
+            "color": cubes[index]["color"],  # Behalte die vorhandene Farbe
+            "visible": cubes[index]["visible"],  # Behalte die Sichtbarkeit
+        }
+        queue.put("REPLOT")
+
+    def toggle_visibility(index):
+        """ Sichtbarkeit des Cubes umschalten """
+        cubes[index] = {
+            **cubes[index],  # Übernehme die bestehenden Werte
+            "visible": not cubes[index]["visible"],  # Sichtbarkeit toggeln
+        }
+        queue.put("REPLOT")
+
 
     def add_cube():
         """Füge einen neuen Cube hinzu."""
-        cubes.append({"position": [0, 0, 0], "size": [1, 1, 1], "color": "red"})
+        cubes.append({"position": [0, 0, 0], "size": [1, 1, 1], "color": "red", "visible": "true"})
         update_cube_selector()
         selected_cube_index.set(len(cubes) - 1)  # Wähle den neuen Cube aus
         update_gui_fields()
@@ -100,7 +110,6 @@ def gui_process(queue):
     root.geometry("400x400+800+100")  # Größe und Position (400x400 Pixel, 100px von oben/links)
     selected_cube_index = tk.IntVar(value=0)  # Index des aktuell ausgewählten Cubes
 
-
     # Menüleiste erstellen
     menu_bar = tk.Menu(root)
     file_menu = tk.Menu(menu_bar, tearoff=0)
@@ -119,6 +128,8 @@ def gui_process(queue):
     bottom_frame.pack(fill="x", pady=5)
 
     # Cube-Auswahl im oberen Frame
+    if (len(cubes)==0):
+        cubes.append({"position": [0, 0, 0], "size": [1, 1, 1], "color": "red"})
     tk.Label(top_frame, text="Wähle einen Cube:").pack(side="left", padx=5)
     cube_selector = tk.OptionMenu(
         top_frame,

@@ -1,9 +1,9 @@
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 
-def plot_process(queue):
+def plot_process(queue, cubes):
     print("Plot-Prozess gestartet...")
-    cubes = []  # Liste der Cubes
+    print("Initial Cubes:",cubes)  # Liste der Cubes
 
 
     def draw_cube(ax, cube):
@@ -45,10 +45,7 @@ def plot_process(queue):
     # Matplotlib-Plot initialisieren
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
-
-    # Initialer Quader
-    cube_position = [0, 0, 0]
-    cube_size = [1, 1, 1]
+    ax.view_init(elev=23,azim=38)
 
     # Funktion zum Replotten
     def replot():
@@ -65,7 +62,6 @@ def plot_process(queue):
         ax.set_xlabel('x')
         ax.set_ylabel('y')
         ax.set_zlabel('z')
-        ax.view_init(elev=23,azim=38)
         plt.draw()
 
     # Interaktiver Plot
@@ -83,24 +79,8 @@ def plot_process(queue):
                 print("Beenden-Befehl empfangen. Schließe das Plot-Fenster...")
                 plt.close()  # Schließe das Plot-Fenster
                 break        # Beende die Schleife
-            else:
-                print(f"Empfangene Daten: {command}")
-                index = command["index"]
-
-                # Wenn der Index in der Cube-Liste existiert, aktualisiere ihn
-                if index < len(cubes):
-                    cubes[index].update(command)
-                    print(f"Cube {index} aktualisiert: {cubes[index]}")
-                # Wenn der Index größer ist, füge einen neuen Cube hinzu
-                elif index == len(cubes):
-                    cubes.append(command)
-                    print(f"Neuer Cube hinzugefügt: {command}")
-                # Löschen eines Cubes, wenn `visible` auf False gesetzt wird
-                elif command.get("action") == "delete":
-                    if index < len(cubes):
-                        del cubes[index]
-                        print(f"Cube {index} gelöscht.")
-                
+            elif command == "REPLOT":
+                print("REPLOT: Aktuelle Liste der Cubes",cubes)
                 replot()
         else:
             # Debug: Keine neuen Daten
