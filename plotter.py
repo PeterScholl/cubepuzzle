@@ -5,6 +5,10 @@ def plot_process(queue, cubes):
     print("Plot-Prozess gestartet...")
     print("Initial Cubes:",cubes)  # Liste der Cubes
 
+    def handle_close(event):
+        print("Plot-Fenster geschlossen. Beende das Programm...")
+        queue.put("QUIT")  # Schreibe QUIT-Befehl in die Queue
+
 
     def draw_cube(ax, cube):
         """Zeichne einen Cube, wenn er sichtbar ist."""
@@ -46,6 +50,9 @@ def plot_process(queue, cubes):
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
     ax.view_init(elev=23,azim=38)
+    
+    # Ereignis-Handler für das Schließen des Fensters hinzufügen
+    fig.canvas.mpl_connect("close_event", handle_close)
 
     # Funktion zum Replotten
     def replot():
@@ -77,6 +84,7 @@ def plot_process(queue, cubes):
             command = queue.get()
             if command == "QUIT":
                 print("Beenden-Befehl empfangen. Schließe das Plot-Fenster...")
+                queue.put("QUIT")
                 plt.close()  # Schließe das Plot-Fenster
                 break        # Beende die Schleife
             elif command == "REPLOT":

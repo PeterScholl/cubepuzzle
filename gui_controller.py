@@ -221,6 +221,19 @@ def gui_process(queue,cubes):
 
     # Felder initialisieren
     update_gui_fields()
+    
+    # Funktion zum Überprüfen der Queue
+    def check_queue():
+        if not queue.empty():
+            command = queue.get()
+            if command == "QUIT":
+                print("QUIT-Befehl empfangen. Schließe GUI...")
+                quit_program()
+                return
+        root.after(100, check_queue)  # Überprüfe die Queue alle 100 ms erneut
+
+    # Starte die Queue-Überprüfung
+    root.after(100, check_queue)
 
     # Tkinter-Loop starten
     root.mainloop()
