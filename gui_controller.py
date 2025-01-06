@@ -1,8 +1,49 @@
 import tkinter as tk
-from tkinter import ttk
+import json
+from tkinter import ttk, filedialog
 from tkinter.colorchooser import askcolor  # Für Farbauswahl
 
 def gui_process(queue,cubes):
+    
+    def save_cubes():
+        """Speichert die aktuelle Cube-Liste in einer JSON-Datei."""
+        file_path = filedialog.asksaveasfilename(
+            defaultextension=".json",
+            filetypes=[("JSON-Dateien", "*.json"), ("Alle Dateien", "*.*")]
+        )
+        if file_path:
+            with open(file_path, "w") as file:
+                json.dump(list(cubes), file, indent=4)  # `cubes` in JSON speichern
+            print(f"Cube-Liste gespeichert in: {file_path}")
+
+
+    def load_cubes():
+        """Lädt eine Cube-Liste aus einer JSON-Datei."""
+        file_path = filedialog.askopenfilename(
+            filetypes=[("JSON-Dateien", "*.json"), ("Alle Dateien", "*.*")]
+        )
+        if file_path:
+            with open(file_path, "r") as file:
+                loaded_cubes = json.load(file)  # JSON-Datei lesen
+                #print("\n\nloaded_cubes:",loaded_cubes)
+                if (len(loaded_cubes)==0):
+                    print("Cube-Liste leer")
+                    return
+                # Alte Liste löschen und neue Elemente hinzufügen
+                while (len(cubes)>1): delete_cube_at(0)
+                print("load_cubes(): Alle Cubes bis auf einen gelöscht - es sind jetzt",len(cubes))
+                # ein Cube bleibt übrig
+                for cube in loaded_cubes:
+                    #print("load_cubes(): - einen cube anhängen:",cube)
+                    cubes.append(cube)
+                #print("load_cubes(): Alle Cubes angehängt - insgesamt sind es jetzt",len(cubes))
+                delete_cube_at(0)
+                #print("geladene Cube-Liste:",cubes)
+            
+            print(f"Cube-Liste geladen aus: {file_path}")
+            update_cube_selector()  # Aktualisiere GUI
+            send_update()  # Aktualisiere den Plot
+
 
     def update_gui_fields():
         """Aktualisiere die GUI-Felder basierend auf dem ausgewählten Cube."""
@@ -53,10 +94,20 @@ def gui_process(queue,cubes):
         }
         queue.put("REPLOT")
 
+    def update_cube(index, key, value):
+        """Aktualisiert einen Parameter eines Cubes und ersetzt den gesamten Eintrag."""
+        if 0 <= index < len(cubes):  # Sicherstellen, dass der Index gültig ist
+            cube = cubes[index]  # Aktuellen Cube holen
+            updated_cube = {
+                **cube,  # Bestehende Werte übernehmen
+                key: value,  # Nur den gewünschten Key ändern
+            }
+            cubes[index] = updated_cube  # Aktualisierten Cube zurückschreiben
+            queue.put("REPLOT")  # Sende Replot-Befehl an den Plotter
 
     def add_cube():
         """Füge einen neuen Cube hinzu."""
-        cubes.append({"position": [0, 0, 0], "size": [1, 1, 1], "color": "red", "visible": "true"})
+        cubes.append({"position": [0, 0, 0], "size": [1, 1, 1], "color": "red", "visible": "True"})
         update_cube_selector()
         selected_cube_index.set(len(cubes) - 1)  # Wähle den neuen Cube aus
         update_gui_fields()
@@ -65,12 +116,16 @@ def gui_process(queue,cubes):
     def delete_cube():
         """Lösche den aktuell ausgewählten Cube."""
         index = selected_cube_index.get()
+        delete_cube_at(index)
+        
+    def delete_cube_at(index):
         if len(cubes) > 1:
             del cubes[index]
             selected_cube_index.set(0)  # Wähle den ersten Cube
             update_cube_selector()
             update_gui_fields()
             print(f"Cube {index} gelöscht. Verbleibende Cubes: {len(cubes)}")
+        
 
     def select_cube(index):
         """Wähle einen Cube aus der Liste."""
@@ -96,7 +151,8 @@ def gui_process(queue,cubes):
             #hex_color = "#{:02x}{:02x}{:02x}".format(int(rgb[0]), int(rgb[1]), int(rgb[2]))
             hex_color = rgb
             # Setze die neue Farbe für den Cube
-            cubes[index]["color"] = hex_color
+            update_cube(index,"color",hex_color)
+            #cubes[index]["color"] = hex_color
             color_label.config(text=hex_color, bg=hex_color)
             
             # Werte an die Queue senden
@@ -113,6 +169,9 @@ def gui_process(queue,cubes):
     # Menüleiste erstellen
     menu_bar = tk.Menu(root)
     file_menu = tk.Menu(menu_bar, tearoff=0)
+    file_menu.add_command(label="Speichern", command=save_cubes)
+    file_menu.add_command(label="Laden", command=load_cubes)
+    file_menu.add_separator()
     file_menu.add_command(label="Beenden", command=quit_program)  # Beenden-Option
     menu_bar.add_cascade(label="Datei", menu=file_menu)
     root.config(menu=menu_bar)  # Menüleiste hinzufügen
@@ -230,6 +289,8 @@ def gui_process(queue,cubes):
                 print("QUIT-Befehl empfangen. Schließe GUI...")
                 quit_program()
                 return
+            else:
+                queue.put(command)
         root.after(100, check_queue)  # Überprüfe die Queue alle 100 ms erneut
 
     # Starte die Queue-Überprüfung

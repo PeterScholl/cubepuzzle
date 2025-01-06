@@ -1,0 +1,380 @@
+[
+    {
+        "position": [
+            0,
+            0,
+            0
+        ],
+        "size": [
+            11,
+            10,
+            9
+        ],
+        "color": "#43d9d9",
+        "visible": "True"
+    },
+    {
+        "position": [
+            11,
+            0,
+            0
+        ],
+        "size": [
+            9,
+            11,
+            10
+        ],
+        "color": "#43d92e",
+        "visible": "True"
+    },
+    {
+        "position": [
+            20,
+            0,
+            0
+        ],
+        "size": [
+            10,
+            9,
+            11
+        ],
+        "color": "#d9d968",
+        "visible": "True"
+    },
+    {
+        "position": [
+            0,
+            10,
+            0
+        ],
+        "size": [
+            11,
+            9,
+            10
+        ],
+        "color": "#d96e68",
+        "visible": "True"
+    },
+    {
+        "position": [
+            11,
+            11,
+            0
+        ],
+        "size": [
+            10,
+            9,
+            11
+        ],
+        "color": "#416e68",
+        "visible": "True"
+    },
+    {
+        "position": [
+            21,
+            9,
+            0
+        ],
+        "size": [
+            9,
+            10,
+            11
+        ],
+        "color": "#f1ce68",
+        "visible": "True"
+    },
+    {
+        "position": [
+            0,
+            19,
+            0
+        ],
+        "size": [
+            10,
+            11,
+            9
+        ],
+        "color": "#f1cee1",
+        "visible": "True"
+    },
+    {
+        "position": [
+            10,
+            20,
+            0
+        ],
+        "size": [
+            11,
+            10,
+            9
+        ],
+        "color": "#2b2be1",
+        "visible": "True"
+    },
+    {
+        "position": [
+            21,
+            19,
+            0
+        ],
+        "size": [
+            9,
+            11,
+            10
+        ],
+        "color": "#ebd836",
+        "visible": "True"
+    },
+    {
+        "position": [
+            0,
+            0,
+            9
+        ],
+        "size": [
+            11,
+            9,
+            10
+        ],
+        "color": "#3ed836",
+        "visible": "True"
+    },
+    {
+        "position": [
+            11,
+            0,
+            10
+        ],
+        "size": [
+            9,
+            10,
+            11
+        ],
+        "color": "#de1be9",
+        "visible": "True"
+    },
+    {
+        "position": [
+            20,
+            0,
+            11
+        ],
+        "size": [
+            10,
+            11,
+            9
+        ],
+        "color": "#1bee13",
+        "visible": "True"
+    },
+    {
+        "position": [
+            0,
+            9,
+            10
+        ],
+        "size": [
+            10,
+            11,
+            9
+        ],
+        "color": "#1b10f0",
+        "visible": "True"
+    },
+    {
+        "position": [
+            10,
+            10,
+            11
+        ],
+        "size": [
+            9,
+            11,
+            10
+        ],
+        "color": "#fe10f0",
+        "visible": "True"
+    },
+    {
+        "position": [
+            19,
+            11,
+            11
+        ],
+        "size": [
+            11,
+            10,
+            9
+        ],
+        "color": "#08f8f6",
+        "visible": "True"
+    },
+    {
+        "position": [
+            0,
+            20,
+            9
+        ],
+        "size": [
+            9,
+            10,
+            11
+        ],
+        "color": "#04ac04",
+        "visible": "True"
+    },
+    {
+        "position": [
+            9,
+            21,
+            9
+        ],
+        "size": [
+            11,
+            9,
+            10
+        ],
+        "color": "#ebac04",
+        "visible": "True"
+    },
+    {
+        "position": [
+            20,
+            21,
+            10
+        ],
+        "size": [
+            10,
+            9,
+            11
+        ],
+        "color": "#08f8e6",
+        "visible": "True"
+    },
+    {
+        "position": [
+            0,
+            0,
+            19
+        ],
+        "size": [
+            10,
+            9,
+            11
+        ],
+        "color": "#43d9d9",
+        "visible": "True"
+    },
+    {
+        "position": [
+            10,
+            0,
+            21
+        ],
+        "size": [
+            11,
+            10,
+            9
+        ],
+        "color": "#43d92e",
+        "visible": "True"
+    },
+    {
+        "position": [
+            21,
+            0,
+            20
+        ],
+        "size": [
+            9,
+            11,
+            10
+        ],
+        "color": "#d9d968",
+        "visible": "True"
+    },
+    {
+        "position": [
+            0,
+            9,
+            19
+        ],
+        "size": [
+            9,
+            10,
+            11
+        ],
+        "color": "#d96e68",
+        "visible": "True"
+    },
+    {
+        "position": [
+            9,
+            10,
+            21
+        ],
+        "size": [
+            10,
+            11,
+            9
+        ],
+        "color": "#416e68",
+        "visible": "True"
+    },
+    {
+        "position": [
+            19,
+            11,
+            20
+        ],
+        "size": [
+            11,
+            9,
+            10
+        ],
+        "color": "#f1ce68",
+        "visible": "True"
+    },
+    {
+        "position": [
+            0,
+            19,
+            20
+        ],
+        "size": [
+            9,
+            11,
+            10
+        ],
+        "color": "#f1cee1",
+        "visible": "True"
+    },
+    {
+        "position": [
+            9,
+            21,
+            19
+        ],
+        "size": [
+            10,
+            9,
+            11
+        ],
+        "color": "#2b2be1",
+        "visible": "True"
+    },
+    {
+        "position": [
+            19,
+            20,
+            21
+        ],
+        "size": [
+            11,
+            10,
+            9
+        ],
+        "color": "#ebd836",
+        "visible": "True"
+    }
+]
