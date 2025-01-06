@@ -410,6 +410,23 @@ def QuaderSearch():
             aktpos -=1
     if (aktpos>0): print("QuaderSearchSuccess", orientation)
 
+def QuaderSearchGen():
+    aktpos=0
+    orientation = [-1 for _ in range(27)]
+    while aktpos >= 0 and aktpos < 27:
+        if orientation[aktpos] < 6:
+            orientation[aktpos]+=1
+            if (check_validity(orientation, debug=False)):
+                aktpos+=1
+                if (aktpos>=27):
+                    yield orientation
+                    aktpos-=1
+                else:
+                    orientation[aktpos]=-1 #eigentlich nicht nötig
+        else:
+            orientation[aktpos]=-1
+            aktpos -=1
+    
 def test():
     q1 = Quader(3,2,1,1,1,1)
     q2 = Quader(2,3,1,2,2,2)
@@ -421,7 +438,7 @@ def test():
         print(f"Orientation {i}: {q1}");
 
 def generateCubes(qList):
-    colors = ["#43d9d9","#43d92e","#d9d968","#d96e68","#416e68","#f1ce68","#f1cee1","#2b2be1","#ebd836","#3ed836","#de1be9","#1bee13","#1b10f0","#fe10f0","#08f8f6","#04ac04","#ebac04","#08f8e6"]
+    colors = ["red","blue","#43d92e","#d9d968","#416e68","#f1ce68","#2b2be1","#ebd836","#3ed836","#de1be9","#1bee13","#1b10f0","#fe10f0","#08f8f6","#04ac04","#ebac04","#08f8e6"]
     cubes = []
     for i in qList:
         aktcol = colors.pop(0)

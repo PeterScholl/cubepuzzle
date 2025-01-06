@@ -10,7 +10,7 @@
             10,
             9
         ],
-        "color": "#43d9d9",
+        "color": "red",
         "visible": "True"
     },
     {
@@ -24,7 +24,7 @@
             11,
             10
         ],
-        "color": "#43d92e",
+        "color": "blue",
         "visible": "True"
     },
     {
@@ -38,7 +38,7 @@
             9,
             11
         ],
-        "color": "#d9d968",
+        "color": "#43d92e",
         "visible": "True"
     },
     {
@@ -52,7 +52,7 @@
             9,
             10
         ],
-        "color": "#d96e68",
+        "color": "#d9d968",
         "visible": "True"
     },
     {
@@ -94,7 +94,7 @@
             11,
             9
         ],
-        "color": "#f1cee1",
+        "color": "#2b2be1",
         "visible": "True"
     },
     {
@@ -108,7 +108,7 @@
             10,
             9
         ],
-        "color": "#2b2be1",
+        "color": "#ebd836",
         "visible": "True"
     },
     {
@@ -122,7 +122,7 @@
             11,
             10
         ],
-        "color": "#ebd836",
+        "color": "#3ed836",
         "visible": "True"
     },
     {
@@ -136,7 +136,7 @@
             9,
             10
         ],
-        "color": "#3ed836",
+        "color": "#de1be9",
         "visible": "True"
     },
     {
@@ -150,7 +150,7 @@
             10,
             11
         ],
-        "color": "#de1be9",
+        "color": "#1bee13",
         "visible": "True"
     },
     {
@@ -158,20 +158,6 @@
             20,
             0,
             11
-        ],
-        "size": [
-            10,
-            11,
-            9
-        ],
-        "color": "#1bee13",
-        "visible": "True"
-    },
-    {
-        "position": [
-            0,
-            9,
-            10
         ],
         "size": [
             10,
@@ -183,6 +169,20 @@
     },
     {
         "position": [
+            0,
+            9,
+            10
+        ],
+        "size": [
+            10,
+            11,
+            9
+        ],
+        "color": "#fe10f0",
+        "visible": "True"
+    },
+    {
+        "position": [
             10,
             10,
             11
@@ -192,7 +192,7 @@
             11,
             10
         ],
-        "color": "#fe10f0",
+        "color": "#08f8f6",
         "visible": "True"
     },
     {
@@ -206,7 +206,7 @@
             10,
             9
         ],
-        "color": "#08f8f6",
+        "color": "#04ac04",
         "visible": "True"
     },
     {
@@ -220,7 +220,7 @@
             10,
             11
         ],
-        "color": "#04ac04",
+        "color": "#ebac04",
         "visible": "True"
     },
     {
@@ -234,7 +234,7 @@
             9,
             10
         ],
-        "color": "#ebac04",
+        "color": "#08f8e6",
         "visible": "True"
     },
     {
@@ -248,7 +248,7 @@
             9,
             11
         ],
-        "color": "#08f8e6",
+        "color": "red",
         "visible": "True"
     },
     {
@@ -262,7 +262,7 @@
             9,
             11
         ],
-        "color": "#43d9d9",
+        "color": "blue",
         "visible": "True"
     },
     {
@@ -304,7 +304,7 @@
             10,
             11
         ],
-        "color": "#d96e68",
+        "color": "#416e68",
         "visible": "True"
     },
     {
@@ -318,7 +318,7 @@
             11,
             9
         ],
-        "color": "#416e68",
+        "color": "#f1ce68",
         "visible": "True"
     },
     {
@@ -332,7 +332,7 @@
             9,
             10
         ],
-        "color": "#f1ce68",
+        "color": "#2b2be1",
         "visible": "True"
     },
     {
@@ -346,7 +346,7 @@
             11,
             10
         ],
-        "color": "#f1cee1",
+        "color": "#ebd836",
         "visible": "True"
     },
     {
@@ -360,7 +360,7 @@
             9,
             11
         ],
-        "color": "#2b2be1",
+        "color": "#3ed836",
         "visible": "True"
     },
     {
@@ -374,7 +374,7 @@
             10,
             9
         ],
-        "color": "#ebd836",
+        "color": "#de1be9",
         "visible": "True"
     }
 ]
