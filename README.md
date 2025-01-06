@@ -15,4 +15,9 @@ erzeugt eine Datei cubes.json, die man im GUI (main.py starten) ansehen kann
 
 ![grafik](https://github.com/user-attachments/assets/4ce57bef-7bca-4c08-a3d3-1bc1433e1c46)
 
+## Nebeneffekt - Multiprocessing mit geteilter Queue
 
+Zwei Prozesse die sich eine Queue-Teilen um darüber Nachrichten zu tauschen und auch eine gemeinsame Liste (das war etwas komplexer).
+```
+from multiprocessing import Process, Queue, Manager
+```
